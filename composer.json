@@ -1,0 +1,27 @@
+{
+    "name": "shanginn/eloquent-postgresql",
+    "description": "Extended Eloqunet PostgreSQL driver for Laravel (Pogoquent)",
+    "keywords": ["postgresql", "pgsql", "postgres", "database", "pogequent", "eloquent", "laravel", "types"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shangin Nikolai",
+            "email": "shanginn@gmail.com",
+            "homepage": "http://shanginn.ru/"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4",
+        "illuminate/database": "^5.1",
+        "illuminate/support": "^5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Shanginn\\Postgresql\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "preferred-install": "dist"
+    }
+}
