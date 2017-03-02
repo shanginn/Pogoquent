@@ -4,7 +4,7 @@ namespace Shanginn\Postgresql\Schema;
 
 class Blueprint extends \Illuminate\Database\Schema\Blueprint
 {
-    use BlueprintPostgresColumns;
+    use BlueprintPostgresTypes;
 
     /**
      * @param array|string $columns
