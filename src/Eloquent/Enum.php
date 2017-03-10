@@ -62,7 +62,7 @@ class Enum extends Model
 
     public static function createEnum(string $name, array $options)
     {
-        dd(Schema::compileCreateEnum($name, $options));
+        dd('@createEnum', Schema::compileCreateEnum($name, $options));
         return DB::statement("CREATE TYPE {$name} AS ENUM");
     }
 }

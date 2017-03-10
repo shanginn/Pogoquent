@@ -99,4 +99,16 @@ class Builder extends \Illuminate\Database\Query\Builder
         $this->groups[] = $this->connection->raw($expr);
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     * @param bool $cascade
+     */
+    public function truncate($cascade = false)
+    {
+        foreach ($this->grammar->compileTruncate($this) as $sql => $bindings) {
+            $cascade && $sql .= ' cascade';
+            $this->connection->statement($sql, $bindings);
+        }
+    }
 }
