@@ -83,7 +83,7 @@ class PostgresGrammar extends \Illuminate\Database\Query\Grammars\PostgresGramma
     public function compileGroupingSets(array $groups)
     {
         $args = array_map(function ($group) {
-            return '(' . join(', ', $this->wrapColumns($group)) . ')';
+            return '(' . join(', ', $this->wrapArray($group)) . ')';
         }, $groups);
 
         return 'grouping sets ( ' . join(', ', $args) . ' )';
@@ -97,7 +97,7 @@ class PostgresGrammar extends \Illuminate\Database\Query\Grammars\PostgresGramma
      */
     public function compileRollup(array $groups)
     {
-        $args = $this->wrapColumns($groups);
+        $args = $this->wrapArray($groups);
 
         return 'rollup ( ' . join(', ', $args) . ' )';
     }
@@ -110,21 +110,44 @@ class PostgresGrammar extends \Illuminate\Database\Query\Grammars\PostgresGramma
      */
     public function compileCube(array $groups)
     {
-        $args = $this->wrapColumns($groups);
+        $args = $this->wrapArray($groups);
 
         return 'cube ( ' . join(', ', $args) . ' )';
     }
 
     /**
+     * Compile the "select *" portion of the query.
+     *
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  array  $columns
+     * @return string|null
+     */
+    protected function compileColumns(Builder $query, $columns)
+    {
+        // If the query is actually performing an aggregating select, we will let that
+        // compiler handle the building of the select clauses, as it will need some
+        // more syntax that is best handled by that function to keep things neat.
+        if (! is_null($query->aggregate)) {
+            return;
+        }
+
+        $select = 'select ' .
+            ($query->distinct ? 'distinct ' : '') .
+            (is_string($query->distinct) ? 'on (' . $this->w($query->distinct) . ') ' : '');
+
+        return $select . $this->columnize($columns);
+    }
+
+    /**
      * Wraps array of columns
      *
-     * @param array $columns
-     * @return array
+     * @param array|string $columns
+     * @return array|string
      */
-    protected function wrapColumns($columns)
+    protected function w($columns)
     {
-        return array_map(function ($e) {
-            return $this->wrap($e);
-        }, (array) $columns);
+        return is_array($columns) ?
+            $this->wrapArray($columns) :
+            $this->wrap($columns);
     }
 }

@@ -1,10 +1,11 @@
 <?php
 
 namespace Shanginn\Postgresql\Eloquent;
+
 use DB;
 use Schema;
 
-class Enum extends Model
+class _Enum extends Model
 {
     /**
      * The table associated with the model.

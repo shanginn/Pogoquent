@@ -24,6 +24,13 @@ class Builder extends \Illuminate\Database\Query\Builder
     public $grammar;
 
     /**
+     * Indicates if the query returns distinct results.
+     *
+     * @var bool|string
+     */
+    public $distinct = false;
+
+    /**
      * Performs UPSERT statement against selected database
      *
      * @param array $values
@@ -110,5 +117,19 @@ class Builder extends \Illuminate\Database\Query\Builder
             $cascade && $sql .= ' cascade';
             $this->connection->statement($sql, $bindings);
         }
+    }
+
+    /**
+     * Force the query to only return distinct results.
+     * If $column passed, add DISTINCT ON ($column) query.
+     *
+     * @param string $column
+     * @return $this
+     */
+    public function distinct(string $column = null)
+    {
+        $this->distinct = $column ?? true;
+
+        return $this;
     }
 }

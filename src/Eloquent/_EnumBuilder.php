@@ -4,7 +4,7 @@ namespace Shanginn\Postgresql\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Builder extends \Illuminate\Database\Eloquent\Builder
+class _EnumBuilder extends \Illuminate\Database\Eloquent\Builder
 {
     /**
      * Set a model instance for the model being queried.

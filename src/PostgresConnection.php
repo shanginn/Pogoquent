@@ -2,7 +2,8 @@
 
 namespace Shanginn\Postgresql;
 
-use Shanginn\Postgresql\Schema\{Blueprint, PostgresBuilder};
+use Shanginn\Postgresql\Schema\Blueprint;
+use Shanginn\Postgresql\Schema\PostgresBuilder;
 use Shanginn\Postgresql\Query\Builder as QueryBuilder;
 
 class PostgresConnection extends \Illuminate\Database\PostgresConnection
@@ -15,7 +16,7 @@ class PostgresConnection extends \Illuminate\Database\PostgresConnection
     public function getSchemaBuilder()
     {
         $builder = new PostgresBuilder($this);
-        $builder->blueprintResolver(function($table, $callback) {
+        $builder->blueprintResolver(function ($table, $callback) {
             return new Blueprint($table, $callback);
         });
 
@@ -29,8 +30,6 @@ class PostgresConnection extends \Illuminate\Database\PostgresConnection
      */
     public function query()
     {
-        return new QueryBuilder(
-            $this, $this->getQueryGrammar(), $this->getPostProcessor()
-        );
+        return new QueryBuilder($this, $this->getQueryGrammar(), $this->getPostProcessor());
     }
 }
