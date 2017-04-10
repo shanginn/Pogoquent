@@ -17,4 +17,17 @@ class PostgresProcessor extends \Illuminate\Database\Query\Processors\PostgresPr
     {
         return $results;
     }
+
+    public function processColumnWithTypesListing($results)
+    {
+        return array_reduce(
+            array_keys($results),
+            function ($result, $key) use ($results) {
+                $result[$results[$key]->column_name] = $results[$key]->data_type;
+
+                return $result;
+            },
+            []
+        );
+    }
 }

@@ -37,6 +37,21 @@ class PostgresBuilder extends \Illuminate\Database\Schema\PostgresBuilder
         static::$indexesConcurrently = $status;
     }
 
+    /**
+     * Get the column listing for a given table.
+     *
+     * @param  string  $table
+     * @return array
+     */
+    public function getColumnWithTypesListing($table)
+    {
+        $table = $this->connection->getTablePrefix().$table;
+
+        $results = $this->connection->select($this->grammar->compileColumnListing($table, true));
+
+        return $this->connection->getPostProcessor()->processColumnWithTypesListing($results);
+    }
+
     public function createEnum(string $name, array $options)
     {
         return $this->connection->insert(

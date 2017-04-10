@@ -46,4 +46,17 @@ class PostgresGrammar extends \Illuminate\Database\Schema\Grammars\PostgresGramm
             "({$columns})"                                           // columns
         ]));
     }
+
+    /**
+     * Compile the query to determine the list of columns.
+     *
+     * @param  string $table
+     * @param  bool $withTypes
+     * @return string
+     */
+    public function compileColumnListing($table, $withTypes = false)
+    {
+        $columns = 'column_name' . ($withTypes ? ',data_type' : '');
+        return "select {$columns} from information_schema.columns where table_name = '$table'";
+    }
 }

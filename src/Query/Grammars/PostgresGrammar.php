@@ -69,6 +69,7 @@ class PostgresGrammar extends \Illuminate\Database\Query\Grammars\PostgresGramma
     protected function whereJsonbOperators($where)
     {
         $value = $this->parameter($where['value']);
+        //dd($value);
         $func = $this->jsonbOperators[$where['operator']];
 
         return "$func(" . $this->wrap($where['column']) . ', ' . $value . ')';
