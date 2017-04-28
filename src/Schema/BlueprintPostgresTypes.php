@@ -42,4 +42,15 @@ trait BlueprintPostgresTypes
     {
         return $this->addColumn('array', $column);
     }
+
+    /**
+     * Create a new tsvector column on the table.
+     *
+     * @param  string  $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function tsvector($column)
+    {
+        return $this->addColumn('tsvector', $column);
+    }
 }

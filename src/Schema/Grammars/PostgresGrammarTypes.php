@@ -219,4 +219,16 @@ trait PostgresGrammarTypes
     {
         return 'hstore';
     }
+
+    /**
+     * Create tsvector column data type
+     * used for full text search
+     *
+     * @param  Fluent $column
+     * @return string
+     */
+    protected function typeTsvector(Fluent $column)
+    {
+        return 'tsvector';
+    }
 }

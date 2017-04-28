@@ -38,7 +38,8 @@ class Blueprint extends \Illuminate\Database\Schema\Blueprint
         $concurrently = PostgresBuilder::$indexesConcurrently ? 'concurrently' : '';
 
         return $this->addCommand(
-            $type, compact('index', 'columns', 'algorithm', 'concurrently')
+            $type,
+            compact('index', 'columns', 'algorithm', 'concurrently')
         );
     }
 }
