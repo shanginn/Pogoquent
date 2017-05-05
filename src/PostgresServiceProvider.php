@@ -43,8 +43,7 @@ class PostgresServiceProvider extends ServiceProvider
 
     public function registerCustomDbTypes(PostgresConnection $connection)
     {
-        $schema = $connection->getDoctrineSchemaManager();
-        $databasePlatform = $schema->getDatabasePlatform();
+        $databasePlatform = $connection->getDoctrineSchemaManager()->getDatabasePlatform();
 
         foreach ($this->customDbTypes as $yourTypeName => $doctrineTypeName) {
             $databasePlatform->registerDoctrineTypeMapping($yourTypeName, $doctrineTypeName);
