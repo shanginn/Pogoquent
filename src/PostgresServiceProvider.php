@@ -10,18 +10,19 @@ use Shanginn\Postgresql\Query\Processors\PostgresProcessor as PostProcessor;
 
 class PostgresServiceProvider extends ServiceProvider
 {
-    protected $customDbTypes = [
-        'event_format'    => 'text',
-        'event_audience'  => 'text',
-        'language_level'  => 'text',
-        'age_category'    => 'text',
-        'reservation'     => 'text',
-        'adult_presence'  => 'text',
-        'price_per'       => 'text',
-        'payment_method'  => 'text',
-        'scheduling_type' => 'text',
-        'event_status'    => 'text'
-    ];
+    /**
+     * Register custom types in doctrine abstract platform
+     *
+     * @param PostgresConnection $connection
+     */
+    public function registerCustomDbTypes(PostgresConnection $connection)
+    {
+        $databasePlatform = $connection->getDoctrineSchemaManager()->getDatabasePlatform();
+
+        foreach (config('pogoquent.custom_db_types') as $yourTypeName => $doctrineTypeName) {
+            $databasePlatform->registerDoctrineTypeMapping($yourTypeName, $doctrineTypeName);
+        }
+    }
 
     /**
      * Register our pgsql connection.
@@ -41,12 +42,15 @@ class PostgresServiceProvider extends ServiceProvider
         });
     }
 
-    public function registerCustomDbTypes(PostgresConnection $connection)
+    /**
+     * Perform post-registration booting of services.
+     *
+     * @return void
+     */
+    public function boot()
     {
-        $databasePlatform = $connection->getDoctrineSchemaManager()->getDatabasePlatform();
-
-        foreach ($this->customDbTypes as $yourTypeName => $doctrineTypeName) {
-            $databasePlatform->registerDoctrineTypeMapping($yourTypeName, $doctrineTypeName);
-        }
+        $this->publishes([
+            __DIR__ . '/config/pogoquent.php' => config_path('pogoquent.php'),
+        ], 'config');
     }
 }
