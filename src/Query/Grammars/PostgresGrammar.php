@@ -7,6 +7,19 @@ use Illuminate\Database\Query\Builder;
 class PostgresGrammar extends \Illuminate\Database\Query\Grammars\PostgresGrammar
 {
     /**
+     * All of the available clause operators.
+     *
+     * @var array
+     */
+    protected $operators = [
+        '=', '<', '>', '<=', '>=', '<>', '!=',
+        'like', 'not like', 'between', 'ilike',
+        '&', '|', '#', '<<', '>>',
+        '@>', '<@', '?', '?|', '?&', '||', '-', '-', '#-',
+        '&&'
+    ];
+
+    /**
      * Jsonb operators that require function wrapping
      *
      * TODO: operator '?|' also fits for points and lines

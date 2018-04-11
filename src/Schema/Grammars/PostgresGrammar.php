@@ -54,9 +54,8 @@ class PostgresGrammar extends \Illuminate\Database\Schema\Grammars\PostgresGramm
      * @param  bool $withTypes
      * @return string
      */
-    public function compileColumnListing($table, $withTypes = false)
+    public function compileColumnListingWithTypes()
     {
-        $columns = 'column_name' . ($withTypes ? ',data_type' : '');
-        return "select {$columns} from information_schema.columns where table_name = '$table'";
+        return "select column_name, data_type from information_schema.columns where table_name = ?";
     }
 }

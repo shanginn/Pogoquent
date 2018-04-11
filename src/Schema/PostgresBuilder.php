@@ -47,7 +47,7 @@ class PostgresBuilder extends \Illuminate\Database\Schema\PostgresBuilder
     {
         $table = $this->connection->getTablePrefix().$table;
 
-        $results = $this->connection->select($this->grammar->compileColumnListing($table, true));
+        $results = $this->connection->select($this->grammar->compileColumnListingWithTypes(), [$table]);
 
         return $this->connection->getPostProcessor()->processColumnWithTypesListing($results);
     }
