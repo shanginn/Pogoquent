@@ -8,17 +8,6 @@ namespace Shanginn\Postgresql\Schema;
 trait BlueprintPostgresGeometricTypes
 {
     /**
-     * Create a new point column on the table.
-     *
-     * @param  string  $column
-     * @return \Illuminate\Support\Fluent
-     */
-    public function point($column)
-    {
-        return $this->addColumn('point', $column);
-    }
-
-    /**
      * Create a new line column on the table.
      *
      * @param  string  $column
